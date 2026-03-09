@@ -33,4 +33,4 @@ Here a minimal structure needed :
 - Authentication: JWT + bcrypt
 - Validation: express-validator
 - Testing: Jest + Supertest
-- Front-end : Angular
+- Front-end : Html vanilla

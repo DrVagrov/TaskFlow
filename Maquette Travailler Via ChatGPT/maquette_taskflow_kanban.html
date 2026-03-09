@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TaskFlow – Maquette Kanban</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --panel: #ffffff;
+      --panel-soft: #f8fafc;
+      --line: #dbe4ee;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --primary: #2563eb;
+      --primary-soft: #dbeafe;
+      --success: #16a34a;
+      --warning: #d97706;
+      --danger: #dc2626;
+      --shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #eff6ff 0%, var(--bg) 220px);
+      color: var(--text);
+    }
+
+    .app {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+
+    .brand p {
+      margin: 6px 0 0;
+      color: var(--muted);
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    button, select, input, textarea {
+      font: inherit;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 12px;
+      padding: 12px 16px;
+      cursor: pointer;
+      transition: 0.2s ease;
+      font-weight: 600;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.24);
+    }
+
+    .btn-primary:hover { transform: translateY(-1px); }
+
+    .btn-secondary {
+      background: white;
+      color: var(--text);
+      border: 1px solid var(--line);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid rgba(219, 228, 238, 0.9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .sidebar {
+      padding: 18px;
+      position: sticky;
+      top: 24px;
+    }
+
+    .section-title {
+      margin: 0 0 14px;
+      font-size: 1rem;
+    }
+
+    .field {
+      margin-bottom: 14px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.92rem;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .input, .select, .textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 12px;
+      padding: 12px 14px;
+      color: var(--text);
+    }
+
+    .textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .filter-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--panel-soft);
+      border: 1px solid var(--line);
+      color: var(--text);
+      font-size: 0.86rem;
+    }
+
+    .tag::before {
+      content: "•";
+      font-size: 1rem;
+      color: var(--primary);
+      margin-right: 4px;
+    }
+
+    .tag .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .stat {
+      padding: 18px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .stat small {
+      color: var(--muted);
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .stat strong {
+      font-size: 1.8rem;
+    }
+
+    .board-wrap {
+      padding: 16px;
+    }
+
+    .board-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .board-head p {
+      margin: 4px 0 0;
+      color: var(--muted);
+    }
+
+    .kanban {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(250px, 1fr));
+      gap: 16px;
+      overflow-x: auto;
+    }
+
+    .column {
+      transition: background 0.2s ease, border-color 0.2s ease;
+      background: var(--panel-soft);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px;
+      min-height: 560px;
+    }
+
+    .column-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .column-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+    }
+
+    .badge {
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      background: white;
+      border: 1px solid var(--line);
+      color: var(--muted);
+    }
+
+    .card {
+      cursor: grab;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.05);
+      margin-bottom: 12px;
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+    }
+
+    .card p {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .meta-pill {
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      border: 1px solid transparent;
+    }
+
+    .pill-category { background: #eef2ff; color: #4338ca; }
+    .pill-user { background: #ecfeff; color: #155e75; }
+    .pill-date { background: #fff7ed; color: #9a3412; }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 10px;
+      padding: 8px 10px;
+      cursor: pointer;
+      color: var(--muted);
+    }
+
+    .column.todo .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .card.dragging {
+      opacity: 0.55;
+      cursor: grabbing;
+      transform: rotate(1deg);
+    }
+
+    .column.drop-target {
+      background: #eff6ff;
+      border-color: var(--primary);
+    }
+    .column.progress .status-dot { background: var(--warning); }
+    .column.review .status-dot { background: var(--primary); }
+    .column.done .status-dot { background: var(--success); }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.45);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 50;
+    }
+
+    .modal-backdrop.open { display: flex; }
+
+    .modal {
+      width: min(760px, 100%);
+      background: white;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 30px 80px rgba(15, 23, 42, 0.22);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+    }
+
+    .modal-header p {
+      margin: 6px 0 0;
+      color: var(--muted);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .form-grid .full { grid-column: 1 / -1; }
+
+    .inline-create {
+      display: grid;
+      grid-template-columns: 1fr 180px auto;
+      gap: 10px;
+      align-items: end;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .helper {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    @media (max-width: 1160px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+      .kanban { grid-template-columns: repeat(4, 290px); }
+    }
+
+    @media (max-width: 760px) {
+      .stats { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+      .inline-create { grid-template-columns: 1fr; }
+      .app { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <h1>TaskFlow · Gestion de tâches Kanban</h1>
+        <p>Maquette HTML vanilla alignée avec une application CRUD de tâches, catégories, statuts et filtres.</p>
+      </div>
+      <div class="actions">
+        <button class="btn btn-secondary">Tableau de bord</button>
+        <button class="btn btn-primary" id="openTaskModal">+ Ajouter une tâche</button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="panel sidebar">
+        <section>
+          <h2 class="section-title">Filtres</h2>
+          <div class="filter-grid">
+            <div class="field">
+              <label for="search">Recherche</label>
+              <input id="search" class="input" type="text" placeholder="Titre ou description" />
+            </div>
+            <div class="field">
+              <label for="filterCategory">Catégorie</label>
+              <select id="filterCategory" class="select">
+                <option>Toutes les catégories</option>
+                <option>Backend</option>
+                <option>Frontend</option>
+                <option>Design</option>
+                <option>Tests</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="filterStatus">Statut</label>
+              <select id="filterStatus" class="select">
+                <option>Tous les statuts</option>
+                <option>À faire</option>
+                <option>En cours</option>
+                <option>En revue</option>
+                <option>Terminé</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="filterUser">Utilisateur assigné</label>
+              <select id="filterUser" class="select">
+                <option>Tous les utilisateurs</option>
+                <option>Sarah</option>
+                <option>Malik</option>
+                <option>Lina</option>
+                <option>Hugo</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <section style="margin-top: 22px;">
+          <h2 class="section-title">Catégories disponibles</h2>
+          <div class="tag-list">
+            <span class="tag">Backend</span>
+            <span class="tag">Frontend</span>
+            <span class="tag">UI/UX</span>
+            <span class="tag">Bugfix</span>
+            <span class="tag">Tests</span>
+          </div>
+        </section>
+      </aside>
+
+      <main>
+        <section class="stats">
+          <article class="stat">
+            <small>Total des tâches</small>
+            <strong>18</strong>
+          </article>
+          <article class="stat">
+            <small>Échéances cette semaine</small>
+            <strong>5</strong>
+          </article>
+          <article class="stat">
+            <small>Tâches terminées</small>
+            <strong>9</strong>
+          </article>
+        </section>
+
+        <section class="panel board-wrap">
+          <div class="board-head">
+            <div>
+              <h2 style="margin:0;">Projet · Sprint en cours</h2>
+              <p>Vue Kanban avec colonnes par statut, filtrage par catégorie et utilisateur.</p>
+            </div>
+            <button class="btn btn-secondary">Exporter</button>
+          </div>
+
+          <div class="kanban">
+            <section class="column todo">
+              <div class="column-header">
+                <div class="column-title"><span class="status-dot"></span> À faire</div>
+                <span class="badge">4</span>
+              </div>
+
+              <article class="card" draggable="true">
+                <h3>Créer l'API d'authentification</h3>
+                <p>Mise en place des routes de connexion, inscription et gestion du token JWT.</p>
+                <div class="meta">
+                  <span class="meta-pill pill-category">Backend</span>
+                  <span class="meta-pill pill-user">Sarah</span>
+                  <span class="meta-pill pill-date">12 mars</span>
+                </div>
+                <div class="card-footer">
+                  <small>Priorité : Haute</small>
+                  <div class="card-actions">
+                    <button class="icon-btn">✏️</button>
+                    <button class="icon-btn">🗑️</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="card" draggable="true">
+                <h3>Créer le formulaire “Nouvelle tâche”</h3>
+                <p>Inclure titre, description, échéance optionnelle, catégorie et attribution utilisateur.</p>
+                <div class="meta">
+                  <span class="meta-pill pill-category">Frontend</span>
+                  <span class="meta-pill pill-user">Lina</span>
+                </div>
+                <div class="card-footer">
+                  <small>Sans échéance</small>
+                  <div class="card-actions">
+                    <button class="icon-btn">✏️</button>
+                    <button class="icon-btn">🗑️</button>
+                  </div>
+                </div>
+              </article>
+            </section>
+
+            <section class="column progress">
+              <div class="column-header">
+                <div class="column-title"><span class="status-dot"></span> En cours</div>
+                <span class="badge">5</span>
+              </div>
+
+              <article class="card" draggable="true">
+                <h3>Vue Kanban responsive</h3>
+                <p>Créer les colonnes, les cartes de tâche et les blocs statistiques du tableau de bord.</p>
+                <div class="meta">
+                  <span class="meta-pill pill-category">UI/UX</span>
+                  <span class="meta-pill pill-user">Hugo</span>
+                  <span class="meta-pill pill-date">14 mars</span>
+                </div>
+                <div class="card-footer">
+                  <small>Design system v1</small>
+                  <div class="card-actions">
+                    <button class="icon-btn">✏️</button>
+                    <button class="icon-btn">🗑️</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="card" draggable="true">
+                <h3>Filtrage par catégorie et statut</h3>
+                <p>Prévoir une barre latérale avec sélection multiple possible dans la version finale.</p>
+                <div class="meta">
+                  <span class="meta-pill pill-category">Frontend</span>
+                  <span class="meta-pill pill-user">Malik</span>
+                </div>
+                <div class="card-footer">
+                  <small>UX clé</small>
+                  <div class="card-actions">
+                    <button class="icon-btn">✏️</button>
+                    <button class="icon-btn">🗑️</button>
+                  </div>
+                </div>
+              </article>
+            </section>
+
+            <section class="column review">
+              <div class="column-header">
+                <div class="column-title"><span class="status-dot"></span> En revue</div>
+                <span class="badge">3</span>
+              </div>
+
+              <article class="card" draggable="true">
+                <h3>Modèle de données Task / Category / Status</h3>
+                <p>Validation de la structure minimale avant implémentation MongoDB/Mongoose.</p>
+                <div class="meta">
+                  <span class="meta-pill pill-category">Backend</span>
+                  <span class="meta-pill pill-user">Sarah</span>
+                  <span class="meta-pill pill-date">11 mars</span>
+                </div>
+                <div class="card-footer">
+                  <small>À valider en équipe</small>
+                  <div class="card-actions">
+                    <button class="icon-btn">✏️</button>
+                    <button class="icon-btn">🗑️</button>
+                  </div>
+                </div>
+              </article>
+            </section>
+
+            <section class="column done">
+              <div class="column-header">
+                <div class="column-title"><span class="status-dot"></span> Terminé</div>
+                <span class="badge">6</span>
+              </div>
+
+              <article class="card" draggable="true">
+                <h3>Maquettage du tableau de bord</h3>
+                <p>Définition des indicateurs clés : total des tâches, échéances proches, tâches terminées.</p>
+                <div class="meta">
+                  <span class="meta-pill pill-category">Design</span>
+                  <span class="meta-pill pill-user">Lina</span>
+                </div>
+                <div class="card-footer">
+                  <small>Validé</small>
+                  <div class="card-actions">
+                    <button class="icon-btn">✏️</button>
+                    <button class="icon-btn">🗑️</button>
+                  </div>
+                </div>
+              </article>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="taskModal">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <h2>Ajouter une tâche</h2>
+          <p>Formulaire de création conforme au besoin : titre, description, échéance optionnelle, catégorie et utilisateur assigné.</p>
+        </div>
+        <button class="icon-btn" id="closeTaskModal">✕</button>
+      </div>
+
+      <form>
+        <div class="form-grid">
+          <div class="field full">
+            <label for="taskTitle">Titre</label>
+            <input id="taskTitle" class="input" type="text" placeholder="Ex. Intégrer les filtres Kanban" />
+          </div>
+
+          <div class="field full">
+            <label for="taskDescription">Description</label>
+            <textarea id="taskDescription" class="textarea" placeholder="Décrire la tâche, le contexte et le résultat attendu"></textarea>
+          </div>
+
+          <div class="field">
+            <label for="taskDeadline">Échéance (optionnel)</label>
+            <input id="taskDeadline" class="input" type="date" />
+          </div>
+
+          <div class="field">
+            <label for="taskUser">Attribuer à un utilisateur</label>
+            <select id="taskUser" class="select">
+              <option>Sélectionner un utilisateur</option>
+              <option>Sarah</option>
+              <option>Malik</option>
+              <option>Lina</option>
+              <option>Hugo</option>
+            </select>
+          </div>
+
+          <div class="field full">
+            <label for="taskStatus">Statut initial</label>
+            <select id="taskStatus" class="select">
+              <option>À faire</option>
+              <option>En cours</option>
+              <option>En revue</option>
+            </select>
+          </div>
+
+          <div class="field full">
+            <label>Catégories (sélection multiple)</label>
+            <div class="tag-list" id="categorySelector">
+              <label class="tag"><input type="checkbox" hidden /> Backend</label>
+              <label class="tag"><input type="checkbox" hidden /> Frontend</label>
+              <label class="tag"><input type="checkbox" hidden /> UI/UX</label>
+              <label class="tag"><input type="checkbox" hidden /> Tests</label>
+              <button type="button" class="tag" id="addCategoryBtn">+ Nouvelle</button>
+            </div>
+            <div class="helper">Cliquez sur les puces pour sélectionner plusieurs catégories.</div>
+          </div>
+
+          <div class="field full" id="newCategoryField" style="display:none;">
+            <label>Créer une catégorie</label>
+            <div class="inline-create">
+              <input class="input" id="newCategoryName" type="text" placeholder="Nom de la catégorie" />
+              <select class="select">
+                <option>Attribuer à : Sarah</option>
+                <option>Attribuer à : Malik</option>
+                <option>Attribuer à : Lina</option>
+                <option>Attribuer à : Hugo</option>
+              </select>
+              <button type="button" class="btn btn-secondary" id="createCategoryBtn">Créer</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="cancelTaskModal">Annuler</button>
+          <button type="submit" class="btn btn-primary">Enregistrer la tâche</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById('taskModal');
+    const openBtn = document.getElementById('openTaskModal');
+    const closeBtn = document.getElementById('closeTaskModal');
+    const cancelBtn = document.getElementById('cancelTaskModal');
+    const addCategoryBtn = document.getElementById('addCategoryBtn');
+    const newCategoryField = document.getElementById('newCategoryField');
+    const createCategoryBtn = document.getElementById('createCategoryBtn');
+    const categorySelector = document.getElementById('categorySelector');
+
+    const openModal = () => modal.classList.add('open');
+    const closeModal = () => modal.classList.remove('open');
+
+    openBtn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    cancelBtn.addEventListener('click', closeModal);
+
+    addCategoryBtn?.addEventListener('click', () => {
+      newCategoryField.style.display = 'block';
+    });
+
+    createCategoryBtn?.addEventListener('click', () => {
+      const nameInput = document.getElementById('newCategoryName');
+      const value = nameInput.value.trim();
+      if (!value) return;
+
+      const label = document.createElement('label');
+      label.className = 'tag';
+      label.innerHTML = `<input type="checkbox" hidden /> ${value}`;
+
+      categorySelector.insertBefore(label, addCategoryBtn);
+      nameInput.value = '';
+      newCategoryField.style.display = 'none';
+    });
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    let draggedCard = null;
+
+    const getBadge = (column) => column.querySelector('.badge');
+    const updateCounts = () => {
+      document.querySelectorAll('.column').forEach((column) => {
+        const badge = getBadge(column);
+        const count = column.querySelectorAll('.card').length;
+        if (badge) badge.textContent = count;
+      });
+    };
+
+    document.querySelectorAll('.card').forEach((card) => {
+      card.addEventListener('dragstart', () => {
+        draggedCard = card;
+        card.classList.add('dragging');
+      });
+
+      card.addEventListener('dragend', () => {
+        card.classList.remove('dragging');
+        document.querySelectorAll('.column').forEach((column) => column.classList.remove('drop-target'));
+        draggedCard = null;
+        updateCounts();
+      });
+    });
+
+    document.querySelectorAll('.column').forEach((column) => {
+      column.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        column.classList.add('drop-target');
+      });
+
+      column.addEventListener('dragleave', () => {
+        column.classList.remove('drop-target');
+      });
+
+      column.addEventListener('drop', (e) => {
+        e.preventDefault();
+        column.classList.remove('drop-target');
+        if (!draggedCard) return;
+        column.appendChild(draggedCard);
+        updateCounts();
+      });
+    });
+
+    updateCounts();
+  </script>
+</body>
+</html>

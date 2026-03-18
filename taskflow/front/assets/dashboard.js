@@ -319,7 +319,7 @@ const loadReferences = async (token) => {
   const [categoriesRes, statusesRes, usersRes] = await Promise.all([
     fetchWithToken("/api/categories", token),
     fetchWithToken("/api/status", token),
-    fetchWithToken("/api/auth/users", token),
+    fetchWithToken("/api/users", token),
   ]);
 
   categoriesRef = categoriesRes.ok ? await categoriesRes.json() : [];

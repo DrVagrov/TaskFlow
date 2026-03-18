@@ -13,6 +13,7 @@ const taskRoutes = require("./routes/task.routes");
 const categoryRoutes = require("./routes/category.routes");
 const statusRoutes = require("./routes/status.routes");
 const authRoutes = require("./routes/auth.routes");
+const userRoutes = require("./routes/user.routes");
 
 const app = express();
 
@@ -40,6 +41,7 @@ app.use("/api/tasks", taskRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/status", statusRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
 
 app.get("/api/task", (req, res) => {
   res.status(200).json({

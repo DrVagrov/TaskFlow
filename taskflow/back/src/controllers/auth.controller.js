@@ -143,7 +143,7 @@ const removeAdmin = async (req, res) => {
     }
 
     const adminCount = await Admin.countDocuments();
-    if (adminCount <= 3) {
+    if (adminCount <= 2) {
       return sendError(res, 403, "AUTH_FORBIDDEN", "Suppression interdite: minimum 3 admins requis");
     }
 
@@ -155,19 +155,9 @@ const removeAdmin = async (req, res) => {
   }
 };
 
-const listUsers = async (_req, res) => {
-  try {
-    const users = await User.find().select("username email").sort({ username: 1 });
-    return res.status(200).json(users);
-  } catch (error) {
-    return sendError(res, 500, "SERVER_ERROR", "Erreur serveur", error.message);
-  }
-};
-
 module.exports = {
   register,
   login,
   registerAdmin,
   removeAdmin,
-  listUsers,
 };

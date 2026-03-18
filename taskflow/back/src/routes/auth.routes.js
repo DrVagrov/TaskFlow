@@ -4,7 +4,6 @@ const {
   login,
   registerAdmin,
   removeAdmin,
-  listUsers,
 } = require("../controllers/auth.controller");
 const { requireAuth, requireAdmin } = require("../middlewares/auth.middleware");
 const {
@@ -136,7 +135,7 @@ router.post(
  * /api/auth/remove-admin:
  *   delete:
  *     summary: Retirer un utilisateur de la table Admin (Admin uniquement)
- *     description: Cette operation est reservee aux utilisateurs presents dans la table Admin. Elle est interdite si le total des admins est inferieur ou egal a 3.
+ *     description: Cette operation est reservee aux utilisateurs presents dans la table Admin. Elle est interdite si le total des admins est inferieur ou egal a 2.
  *     tags: [Auth]
  *     security:
  *       - bearerAuth: []
@@ -169,26 +168,5 @@ router.delete(
   validateRemoveAdminAuth,
   removeAdmin
 );
-
-/**
- * @swagger
- * /api/auth/users:
- *   get:
- *     summary: Lister les utilisateurs (Admin uniquement)
- *     description: Cette operation est reservee aux utilisateurs presents dans la table Admin.
- *     tags: [Auth]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Liste des utilisateurs
- *       401:
- *         description: Token manquant ou invalide
- *       403:
- *         description: Acces refuse
- *       500:
- *         description: Erreur serveur
- */
-router.get("/users", requireAuth, requireAdmin, listUsers);
 
 module.exports = router;

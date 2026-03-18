@@ -1,7 +1,6 @@
 const express = require("express");
 const {
   createTask,
-  getTaskById,
   getTasks,
   getMyTasks,
   updateTask,
@@ -11,7 +10,6 @@ const { requireAuth, requireAdmin } = require("../middlewares/auth.middleware");
 
 const {
   validateCreateTask,
-  validateGetTask,
   validateUpdateTask,
   validateDeleteTask,
 } = require("../middlewares/validation.middleware");
@@ -90,28 +88,6 @@ router.get("/me", requireAuth, getMyTasks);
 /**
  * @swagger
  * /api/tasks/{id}:
- *   get:
- *     summary: Recuperer une task par son id
- *     tags: [Taches]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: Task trouvee
- *       400:
- *         description: id invalide
- *       401:
- *         description: Token manquant ou invalide
- *       404:
- *         description: Task introuvable
- *       500:
- *         description: Erreur serveur
  *   put:
  *     summary: Mettre a jour une task
  *     tags: [Taches]
@@ -174,7 +150,6 @@ router.get("/me", requireAuth, getMyTasks);
  *       500:
  *         description: Erreur serveur
  */
-router.get("/:id", requireAuth, validateGetTask, getTaskById);
 router.put("/:id", requireAuth, validateUpdateTask, updateTask);
 router.delete("/:id", requireAuth, validateDeleteTask, deleteTask);
 

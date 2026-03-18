@@ -2,14 +2,12 @@ const express = require("express");
 const {
   createStatus,
   getStatuses,
-  getStatusById,
   updateStatus,
   deleteStatus,
 } = require("../controllers/status.controller");
 const { requireAuth, requireAdmin } = require("../middlewares/auth.middleware");
 const {
   validateCreateStatus,
-  validateGetStatus,
   validateUpdateStatus,
   validateDeleteStatus,
 } = require("../middlewares/validation.middleware");
@@ -69,28 +67,6 @@ router.get("/", requireAuth, getStatuses);
 /**
  * @swagger
  * /api/status/{id}:
- *   get:
- *     summary: Recuperer un statut par son id
- *     tags: [Status]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: Status trouve
- *       400:
- *         description: id invalide
- *       404:
- *         description: Status introuvable
- *       401:
- *         description: Token manquant ou invalide
- *       500:
- *         description: Erreur serveur
  *   put:
  *     summary: Mettre a jour un statut
  *     tags: [Status]
@@ -149,7 +125,6 @@ router.get("/", requireAuth, getStatuses);
  *       500:
  *         description: Erreur serveur
  */
-router.get("/:id", requireAuth, validateGetStatus, getStatusById);
 router.put("/:id", requireAuth, validateUpdateStatus, updateStatus);
 router.delete("/:id", requireAuth, validateDeleteStatus, requireAdmin, deleteStatus);
 

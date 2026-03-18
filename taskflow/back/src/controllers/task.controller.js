@@ -122,30 +122,6 @@ const canManageTask = async (task, userId) => {
   return Boolean(await Admin.exists({ userId }));
 };
 
-// tasks/{ID}
-const getTaskById = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    if (!isObjectIdValid(id)) {
-      return sendError(res, 400, "VALIDATION_ERROR", "id invalide");
-    }
-
-    const task = await Task.findById(id)
-      .populate("idCategory", "name")
-      .populate("idStatu", "label")
-      .populate("idUser", "username email");
-
-    if (!task) {
-      return sendError(res, 404, "TASK_NOT_FOUND", "Task introuvable");
-    }
-
-    return res.status(200).json(serializeTask(task));
-  } catch (error) {
-    return sendError(res, 500, "SERVER_ERROR", "Erreur serveur", error.message);
-  }
-};
-
 const updateTask = async (req, res) => {
   try {
     const { id } = req.params;
@@ -244,7 +220,6 @@ module.exports = {
   createTask,
   getTasks,
   getMyTasks,
-  getTaskById,
   updateTask,
   deleteTask,
 };

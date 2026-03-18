@@ -109,32 +109,6 @@ describe("Task CRUD - Jest + Supertest", () => {
     expect(res.status).toBe(403);
   });
 
-  test("GET /api/tasks/:id retourne la task cible", async () => {
-    const { token, userId } = await registerAndLogin({
-      username: "crud_get_user",
-      email: "crud_get_user@test.local",
-      password: "password123",
-    });
-
-    const createRes = await request(app)
-      .post("/api/tasks")
-      .set("Authorization", `Bearer ${token}`)
-      .send({
-        title: "Task to read",
-        description: "Read CRUD test",
-        idCategory: categoryId,
-        idStatu: statusId,
-        idUser: userId,
-      });
-
-    const res = await request(app)
-      .get(`/api/tasks/${createRes.body._id}`)
-      .set("Authorization", `Bearer ${token}`);
-    expect(res.status).toBe(200);
-    expect(res.body._id).toBe(createRes.body._id);
-    expect(res.body.title).toBe("Task to read");
-  });
-
   test("PUT /api/tasks/:id met a jour la task en base", async () => {
     const { token, userId } = await registerAndLogin({
       username: "crud_update_user",

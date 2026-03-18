@@ -169,7 +169,6 @@ module.exports = {
   validateUpdateStatus: [validateIdParam, validateStatusLabel],
   validateDeleteStatus: [validateIdParam],
   validateCreateTask: [validateTaskBodyCreate],
-  validateGetTask: [validateIdParam],
   validateUpdateTask: [validateIdParam, validateTaskBodyUpdate],
   validateDeleteTask: [validateIdParam],
 };

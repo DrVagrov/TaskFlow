@@ -71,22 +71,6 @@ describe("Status CRUD - Jest + Supertest", () => {
     expect(res.body[0].label).toBe("Fini");
   });
 
-  test("GET /api/status/:id retourne le status cible", async () => {
-    const { token } = await registerAndLogin({
-      username: "status_get_user",
-      email: "status_get_user@test.local",
-      password: "password123",
-    });
-
-    const status = await Status.create({ label: "En cours" });
-
-    const res = await request(app).get(`/api/status/${status._id}`).set("Authorization", `Bearer ${token}`);
-
-    expect(res.status).toBe(200);
-    expect(res.body._id).toBe(status._id.toString());
-    expect(res.body.label).toBe("En cours");
-  });
-
   test("PUT /api/status/:id met a jour le status en base", async () => {
     const { token } = await registerAndLogin({
       username: "status_update_user",

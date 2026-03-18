@@ -32,25 +32,6 @@ const getStatuses = async (_req, res) => {
   }
 };
 
-const getStatusById = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    if (!isValidObjectId(id)) {
-      return sendError(res, 400, "VALIDATION_ERROR", "id invalide");
-    }
-
-    const status = await Status.findById(id);
-    if (!status) {
-      return sendError(res, 404, "STATUS_NOT_FOUND", "Status introuvable");
-    }
-
-    return res.status(200).json(status);
-  } catch (error) {
-    return sendError(res, 500, "SERVER_ERROR", "Erreur serveur", error.message);
-  }
-};
-
 const updateStatus = async (req, res) => {
   try {
     const { id } = req.params;
@@ -106,7 +87,6 @@ const deleteStatus = async (req, res) => {
 module.exports = {
   createStatus,
   getStatuses,
-  getStatusById,
   updateStatus,
   deleteStatus,
 };

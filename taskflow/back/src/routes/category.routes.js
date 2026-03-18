@@ -2,14 +2,12 @@ const express = require("express");
 const {
   createCategory,
   getCategories,
-  getCategoryById,
   updateCategory,
   deleteCategory,
 } = require("../controllers/category.controller");
 const { requireAuth, requireAdmin } = require("../middlewares/auth.middleware");
 const {
   validateCreateCategory,
-  validateGetCategory,
   validateUpdateCategory,
   validateDeleteCategory,
 } = require("../middlewares/validation.middleware");
@@ -69,28 +67,6 @@ router.get("/", requireAuth, getCategories);
 /**
  * @swagger
  * /api/categories/{id}:
- *   get:
- *     summary: Recuperer une categorie par son id
- *     tags: [Categories]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: Categorie trouvee
- *       400:
- *         description: id invalide
- *       404:
- *         description: Categorie introuvable
- *       401:
- *         description: Token manquant ou invalide
- *       500:
- *         description: Erreur serveur
  *   put:
  *     summary: Mettre a jour une categorie
  *     tags: [Categories]
@@ -149,7 +125,6 @@ router.get("/", requireAuth, getCategories);
  *       500:
  *         description: Erreur serveur
  */
-router.get("/:id", requireAuth, validateGetCategory, getCategoryById);
 router.put("/:id", requireAuth, validateUpdateCategory, updateCategory);
 router.delete("/:id", requireAuth, validateDeleteCategory, requireAdmin, deleteCategory);
 

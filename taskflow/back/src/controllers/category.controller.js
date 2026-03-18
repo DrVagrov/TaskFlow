@@ -32,25 +32,6 @@ const getCategories = async (_req, res) => {
   }
 };
 
-const getCategoryById = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    if (!isValidObjectId(id)) {
-      return sendError(res, 400, "VALIDATION_ERROR", "id invalide");
-    }
-
-    const category = await Category.findById(id);
-    if (!category) {
-      return sendError(res, 404, "CATEGORY_NOT_FOUND", "Categorie introuvable");
-    }
-
-    return res.status(200).json(category);
-  } catch (error) {
-    return sendError(res, 500, "SERVER_ERROR", "Erreur serveur", error.message);
-  }
-};
-
 const updateCategory = async (req, res) => {
   try {
     const { id } = req.params;
@@ -106,7 +87,6 @@ const deleteCategory = async (req, res) => {
 module.exports = {
   createCategory,
   getCategories,
-  getCategoryById,
   updateCategory,
   deleteCategory,
 };

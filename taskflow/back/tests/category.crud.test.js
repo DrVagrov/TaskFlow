@@ -71,24 +71,6 @@ describe("Category CRUD - Jest + Supertest", () => {
     expect(res.body[0].name).toBe("Data");
   });
 
-  test("GET /api/categories/:id retourne la category cible", async () => {
-    const { token } = await registerAndLogin({
-      username: "category_get_user",
-      email: "category_get_user@test.local",
-      password: "password123",
-    });
-
-    const category = await Category.create({ name: "Communication" });
-
-    const res = await request(app)
-      .get(`/api/categories/${category._id}`)
-      .set("Authorization", `Bearer ${token}`);
-
-    expect(res.status).toBe(200);
-    expect(res.body._id).toBe(category._id.toString());
-    expect(res.body.name).toBe("Communication");
-  });
-
   test("PUT /api/categories/:id met a jour la category en base", async () => {
     const { token } = await registerAndLogin({
       username: "category_update_user",

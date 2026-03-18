@@ -1,4 +1,4 @@
-const API_BASE = localStorage.getItem("taskflow_api_base") || "http://localhost:5000";
+const API_BASE = window.TaskflowConfig?.getApiBase?.() || "http://localhost:5000";
 const TOKEN_KEY = "taskflow_token";
 const USER_KEY = "taskflow_user";
 

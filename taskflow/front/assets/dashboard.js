@@ -1,4 +1,5 @@
-const API_BASE = localStorage.getItem("taskflow_api_base") || "http://localhost:5000";
+const railwayDomain = (process.env.RAILWAY_PUBLIC_DOMAIN || "").replace(/^\/+/, "");
+const API_BASE = localStorage.getItem("taskflow_api_base") || ("https://"+railwayDomain);;
 const TOKEN_KEY = "taskflow_token";
 const USER_KEY = "taskflow_user";
 

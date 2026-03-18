@@ -58,10 +58,9 @@ const clearDatabase = async () => {
 };
 //Connect to Mongoose and MongoDB
 const connectDB = async () => {
-  const { MONGO_URI } = process.env;
-
+  const MONGO_URI = process.env.MONGO_URI??process.env.MONGO_URL;
   if (!MONGO_URI) {
-    console.error("MONGO_URI manquant dans les variables d'environnement.");
+    console.error("MONGO_URI et MONGO_URL manquant dans les variables d'environnement.");
     process.exit(1);
   }
 

@@ -84,7 +84,7 @@ router.post("/register", validateRegisterAuth, register);
  *       500:
  *         description: Erreur serveur
  */
-router.post("/login", validateLoginAuth, login);
+router.post("/api/login", validateLoginAuth, login);
 
 /**
  * @swagger
@@ -124,7 +124,7 @@ router.post("/login", validateLoginAuth, login);
  *         description: Erreur serveur
  */
 router.post(
-  "/register-admin",
+  "/api/register-admin",
   requireAuth,
   requireAdmin,
   validateRegisterAdminAuth,
@@ -163,7 +163,7 @@ router.post(
  *         description: Erreur serveur
  */
 router.delete(
-  "/remove-admin",
+  "/api/remove-admin",
   requireAuth,
   requireAdmin,
   validateRemoveAdminAuth,
@@ -189,6 +189,6 @@ router.delete(
  *       500:
  *         description: Erreur serveur
  */
-router.get("/users", requireAuth, requireAdmin, listUsers);
+router.get("/api/users", requireAuth, requireAdmin, listUsers);
 
 module.exports = router;

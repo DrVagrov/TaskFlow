@@ -1,0 +1,163 @@
+:root {
+  --bg-a: #f0eee8;
+  --bg-b: #d4e3d8;
+  --card: #fffffff2;
+  --text: #1a1f1c;
+  --muted: #617067;
+  --accent: #0f7d57;
+  --accent-strong: #0a5c40;
+  --border: #dde3df;
+  --error: #b3261e;
+  --success: #0d6b2e;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+  color: var(--text);
+  background: radial-gradient(circle at 20% 20%, var(--bg-b), var(--bg-a) 50%);
+}
+
+.auth-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+}
+
+.auth-card {
+  width: min(100%, 430px);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: 0 22px 48px rgba(15, 36, 25, 0.16);
+  padding: 1.5rem;
+}
+
+.auth-header h1 {
+  margin: 0.2rem 0;
+  font-size: 1.8rem;
+}
+
+.eyebrow {
+  margin: 0;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.76rem;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--muted);
+}
+
+.auth-switch {
+  margin-top: 1.3rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.tab {
+  border: 1px solid var(--border);
+  background: #fff;
+  border-radius: 10px;
+  padding: 0.6rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tab.active {
+  border-color: var(--accent);
+  background: #ecf8f2;
+  color: var(--accent-strong);
+}
+
+.auth-form {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.55rem;
+}
+
+label {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+input {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.72rem 0.8rem;
+  font-size: 0.96rem;
+}
+
+input:focus {
+  outline: 2px solid #9ad0b9;
+  border-color: var(--accent);
+}
+
+.submit-btn,
+.ghost-btn {
+  margin-top: 0.45rem;
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 0.76rem 0.8rem;
+  font-size: 0.96rem;
+  font-weight: 700;
+}
+
+.submit-btn {
+  background: var(--accent);
+  color: #fff;
+}
+
+.submit-btn:hover {
+  background: var(--accent-strong);
+}
+
+.ghost-btn {
+  background: #eef2ef;
+  color: var(--text);
+}
+
+.feedback {
+  min-height: 1.25rem;
+  margin-top: 0.9rem;
+  font-size: 0.93rem;
+}
+
+.feedback.error {
+  color: var(--error);
+}
+
+.feedback.success {
+  color: var(--success);
+}
+
+.session {
+  margin-top: 0.8rem;
+  padding-top: 0.8rem;
+  border-top: 1px dashed var(--border);
+}
+
+.session-title {
+  margin: 0 0 0.45rem;
+  font-weight: 700;
+}
+
+.session p {
+  margin: 0.28rem 0;
+}
+
+.hidden {
+  display: none;
+}

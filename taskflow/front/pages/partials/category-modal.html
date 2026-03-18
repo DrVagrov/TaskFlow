@@ -1,0 +1,25 @@
+<div
+  id="category-modal"
+  class="modal hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="category-modal-title"
+>
+  <div id="category-modal-backdrop" class="modal-backdrop"></div>
+  <div class="modal-panel modal-panel-sm">
+    <div class="modal-head">
+      <h2 id="category-modal-title">Creer une categorie</h2>
+    </div>
+    <p id="category-modal-feedback" class="feedback" role="status" aria-live="polite"></p>
+    <form id="category-modal-form" class="modal-form">
+      <div class="field">
+        <label for="category-modal-name-input">Nom</label>
+        <input id="category-modal-name-input" class="input" type="text" maxlength="60" required />
+      </div>
+      <div class="modal-actions">
+        <button id="category-modal-save" class="btn btn-primary" type="submit">Creer</button>
+        <button id="category-modal-close" class="btn btn-secondary" type="button">Annuler</button>
+      </div>
+    </form>
+  </div>
+</div>

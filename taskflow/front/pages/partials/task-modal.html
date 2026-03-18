@@ -1,0 +1,66 @@
+<div id="task-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="task-modal-title">
+  <div id="task-modal-backdrop" class="modal-backdrop"></div>
+  <div class="modal-panel">
+    <div class="modal-head">
+      <h2 id="task-modal-title">Detail de la task</h2>
+    </div>
+
+    <p id="task-modal-feedback" class="feedback" role="status" aria-live="polite"></p>
+
+    <form id="task-modal-form" class="modal-form">
+      <div class="field">
+        <label for="task-modal-title-input">Titre</label>
+        <input id="task-modal-title-input" name="title" class="input" type="text" required />
+      </div>
+      <div class="field">
+        <label for="task-modal-description-input">Description</label>
+        <textarea
+          id="task-modal-description-input"
+          name="description"
+          class="input textarea"
+          rows="4"
+        ></textarea>
+      </div>
+      <div class="field">
+        <label for="task-modal-dueDate-input">Date d'echeance (optionnel)</label>
+        <input id="task-modal-dueDate-input" name="dueDate" class="input" type="date" />
+      </div>
+      <div class="field">
+        <label for="task-modal-category-input">Categorie</label>
+        <div class="field-inline">
+          <select id="task-modal-category-input" name="idCategory" class="select"></select>
+          <button
+            id="task-modal-add-category-btn"
+            class="btn btn-secondary btn-icon"
+            type="button"
+            aria-label="Creer une categorie"
+            title="Creer une categorie"
+          >
+            +
+          </button>
+        </div>
+      </div>
+      <div class="field">
+        <label for="task-modal-status-input">Statut</label>
+        <select id="task-modal-status-input" name="idStatu" class="select"></select>
+      </div>
+      <div class="field">
+        <label for="task-modal-assignee-input">Attribution</label>
+        <select id="task-modal-assignee-input" name="idUser" class="select"></select>
+      </div>
+
+      <div class="modal-meta">
+        <p><strong>Owner:</strong> <span id="task-modal-owner">-</span></p>
+        <p><strong>ID:</strong> <span id="task-modal-id">-</span></p>
+      </div>
+
+      <p id="task-modal-permission" class="modal-permission"></p>
+
+      <div class="modal-actions">
+        <button id="task-modal-save" class="btn btn-primary" type="submit">Enregistrer</button>
+        <button id="task-modal-delete" class="btn btn-danger hidden" type="button">Supprimer</button>
+        <button id="task-modal-close" class="btn btn-secondary" type="button">Fermer</button>
+      </div>
+    </form>
+  </div>
+</div>

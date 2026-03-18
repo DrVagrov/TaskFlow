@@ -14,12 +14,12 @@ Here a minimal structure needed :
 - User : {Id, Username,@mail, HashedPassword}
 - Category / Tag : {Id, name}
 - Statu : {Id, name}
-- Task : {Id, title, description, idUser, idCategory, IdStatu}
+- Task : {Id, title, description, idUser (ref User), idCategory (ref Category) , IdStatu(ref Statu)}
 
 ***(OPTIONNAL)*** In the eventuality of a multi project management application, group viewing system will be more adapted (the User can only see tasks of attached groups) there will have some change to do : 
 
-- **Group : {Id, name, HashedPassword, Users[] }**
-- Task : {Id, title, description, idUser, idCategory, IdStatu, **IdGroup**}
+- **Group : {Id, name, HashedPassword, idUsers[(ref User)] }**
+- Task : {Id, title, description,  idUser (ref User), idCategory (ref Category) , IdStatu(ref Statu), **IdGroup (ref Group)**}
 - User : {Id, Username, @mail, HashedPassword}
 
 **BDD Choice:**

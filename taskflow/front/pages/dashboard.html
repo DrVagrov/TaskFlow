@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TaskFlow Dashboard</title>
+    <link rel="stylesheet" href="../assets/dashboard.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <div class="brand">
+          <h1>TaskFlow - Gestion de taches Kanban</h1>
+          <p id="scope-label">Chargement...</p>
+        </div>
+        <div class="actions">
+          <div class="session-inline">
+            <strong>User:</strong> <span id="user-name"></span>
+            <strong>Email:</strong> <span id="user-email"></span>
+          </div>
+          <button id="logout-btn" class="btn btn-danger" type="button">Logout</button>
+        </div>
+      </header>
+
+      <div class="layout">
+        <aside class="panel sidebar">
+          <section>
+            <h2 class="section-title">Filtres</h2>
+            <div class="filter-grid">
+              <div class="field">
+                <label for="search-input">Recherche</label>
+                <input id="search-input" class="input" type="text" placeholder="Titre ou description" />
+              </div>
+              <div class="field">
+                <label for="category-filter">Categorie</label>
+                <select id="category-filter" class="select">
+                  <option value="">Toutes les categories</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="status-filter">Statut</label>
+                <select id="status-filter" class="select">
+                  <option value="">Tous les statuts</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="user-filter">Utilisateur</label>
+                <select id="user-filter" class="select">
+                  <option value="">Tous les utilisateurs</option>
+                </select>
+              </div>
+            </div>
+          </section>
+
+        </aside>
+
+        <main>
+          <section class="stats">
+            <article class="stat summary-stat">
+              <div class="stat-row">
+                <small>Total des taches</small>
+                <strong id="stat-total">0</strong>
+              </div>
+              <div class="stat-row">
+                <small>Echeances <= 7 jours</small>
+                <strong id="stat-due">0</strong>
+              </div>
+              <div class="stat-row">
+                <small>Taches terminees</small>
+                <strong id="stat-done">0</strong>
+              </div>
+            </article>
+            <article class="stat chart-stat">
+              <small>Repartition des statuts</small>
+              <canvas id="status-pie-chart" width="220" height="220" aria-label="Graphique camembert des statuts"></canvas>
+              <p class="completion-rate">Completion: <strong id="completion-rate">0%</strong></p>
+              <div id="status-pie-legend" class="chart-legend"></div>
+            </article>
+            <article class="stat chart-stat">
+              <small>Repartition des categories</small>
+              <canvas
+                id="category-pie-chart"
+                width="220"
+                height="220"
+                aria-label="Graphique camembert des categories"
+              ></canvas>
+              <div id="category-pie-legend" class="chart-legend"></div>
+            </article>
+          </section>
+
+          <p id="feedback" class="feedback" role="status" aria-live="polite"></p>
+
+          <section class="panel board-wrap">
+            <div class="board-head">
+              <div>
+                <h2>Projet - Sprint en cours</h2>
+                <p>Vue Kanban inspiree de la maquette.</p>
+              </div>
+              <button id="create-task-btn" class="btn btn-primary" type="button">Creer une tache</button>
+            </div>
+            <div id="kanban-board" class="kanban"></div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <div id="modals-root"></div>
+    <script src="../assets/modals/bootstrap.js"></script>
+  </body>
+</html>

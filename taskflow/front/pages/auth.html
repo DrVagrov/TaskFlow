@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TaskFlow Auth</title>
+    <link rel="stylesheet" href="../assets/auth.css" />
+  </head>
+  <body>
+    <main class="auth-shell">
+      <section class="auth-card">
+        <header class="auth-header">
+          <p class="eyebrow">TaskFlow</p>
+          <h1>Connexion</h1>
+          <p class="subtitle">Connecte-toi ou cree ton compte pour commencer.</p>
+        </header>
+
+        <nav class="auth-switch" aria-label="Changer de formulaire">
+          <button id="tab-login" class="tab active" type="button">Login</button>
+          <button id="tab-register" class="tab" type="button">Register</button>
+        </nav>
+
+        <form id="form-login" class="auth-form">
+          <label for="login-identifier">Email ou username</label>
+          <input id="login-identifier" name="identifier" type="text" required />
+
+          <label for="login-password">Password</label>
+          <input id="login-password" name="password" type="password" required />
+
+          <button class="submit-btn" type="submit">Se connecter</button>
+        </form>
+
+        <form id="form-register" class="auth-form hidden">
+          <label for="register-username">Username</label>
+          <input id="register-username" name="username" type="text" required />
+
+          <label for="register-email">Email</label>
+          <input id="register-email" name="email" type="email" required />
+
+          <label for="register-password">Password</label>
+          <input id="register-password" name="password" type="password" minlength="8" required />
+
+          <button class="submit-btn" type="submit">Creer un compte</button>
+        </form>
+
+        <p id="feedback" class="feedback" role="status" aria-live="polite"></p>
+
+        <section id="session" class="session hidden">
+          <p class="session-title">Session active</p>
+          <p><strong>User:</strong> <span id="session-user"></span></p>
+          <p><strong>Email:</strong> <span id="session-email"></span></p>
+          <button id="logout-btn" class="ghost-btn" type="button">Se deconnecter</button>
+        </section>
+      </section>
+    </main>
+
+    <script src="../assets/auth.js"></script>
+  </body>
+</html>

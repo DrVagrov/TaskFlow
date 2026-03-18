@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon server.js",
     "start": "node server.js",
-    "start-front" : "serve -s front -l $PORT",
+    "start-front": "serve -s front -l $PORT",
     "test": "jest --runInBand",
     "seed": "node back/scripts/seed.js"
   },
@@ -23,6 +23,7 @@
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.3.0",
     "morgan": "^1.10.1",
+    "serve": "^14.2.6",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
   },

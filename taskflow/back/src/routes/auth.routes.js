@@ -68,8 +68,8 @@ router.post("/register", validateRegisterAuth, register);
  *           schema:
  *             $ref: '#/components/schemas/LoginInput'
  *           example:
- *             identifier: "sylvain@example.com"
- *             password: "motdepasse123"
+ *             identifier: "eric"
+ *             password: "password123"
  *     responses:
  *       200:
  *         description: Connexion reussie

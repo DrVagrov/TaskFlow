@@ -9,7 +9,7 @@ const Category = require("../src/models/Category");
 const Status = require("../src/models/Status");
 const Task = require("../src/models/Task");
 
-const MONGO_URI = process.env.MONGO_URI;
+const MONGO_URI = process.env.MONGO_URI ?? proces.env.Mongo_URL;
 
 const usernames = [
   "alice",

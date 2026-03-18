@@ -10,7 +10,7 @@ const options = {
     },
     servers: [
       {
-        url: "https:/"+(process.env.RAILWAY_PUBLIC_DOMAIN??"/localhost:5000"),
+        url: "http:/"+(process.env.RAILWAY_PUBLIC_DOMAIN || "/localhost:5000"),
       },
     ],
     components: {

@@ -1,4 +1,16 @@
-const API_BASE = window.TaskflowConfig?.getApiBase?.() || "http://localhost:5000";
+const LOCAL_API_BASE = "http://localhost:5000";
+const PROD_API_BASE = "https://taskflow-back-production.up.railway.app";
+const isLocalHost = ["localhost", "127.0.0.1"].includes(window.location.hostname);
+
+let API_BASE =
+  window.TaskflowConfig?.getApiBase?.() ||
+  localStorage.getItem("taskflow_api_base") ||
+  (isLocalHost ? LOCAL_API_BASE : PROD_API_BASE);
+
+if (!isLocalHost && /(localhost|127\.0\.0\.1)/i.test(API_BASE)) {
+  API_BASE = PROD_API_BASE;
+  localStorage.removeItem("taskflow_api_base");
+}
 const TOKEN_KEY = "taskflow_token";
 const USER_KEY = "taskflow_user";
 

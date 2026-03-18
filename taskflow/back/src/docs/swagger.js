@@ -1,5 +1,7 @@
 const swaggerJsdoc = require("swagger-jsdoc");
 
+const railwayDomain = (process.env.RAILWAY_PUBLIC_DOMAIN || "").replace(/^\/+/, "");
+
 const options = {
   definition: {
     openapi: "3.0.0",
@@ -10,7 +12,9 @@ const options = {
     },
     servers: [
       {
-        url: process.env.RAILWAY_PUBLIC_DOMAIN != undefined? `https:/${process.env.RAILWAY_PUBLIC_DOMAIN}`:"http://localhost:5000",
+        url: railwayDomain? 
+        `https:/${railwayDomain}`
+        :"http://localhost:5000",
       },
     ],
     components: {
@@ -33,6 +37,7 @@ const options = {
           type: "object",
           required: ["name"],
           properties: {
+
             name: { type: "string" },
           },
         },

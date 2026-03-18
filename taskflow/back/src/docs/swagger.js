@@ -13,7 +13,7 @@ const options = {
     servers: [
       {
         url: railwayDomain? 
-        `https:/${railwayDomain}`
+        `https://${railwayDomain}`
         :"http://localhost:5000",
       },
     ],

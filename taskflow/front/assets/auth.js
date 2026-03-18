@@ -1,4 +1,6 @@
-const API_BASE = require("./congif.API_BASE");
+const railwayDomain = (process.env.RAILWAY_PUBLIC_DOMAIN || "").replace(/^\/+/, "");
+const API_BASE = localStorage.getItem("taskflow_api_base") || ("https://"+railwayDomain);
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const TOKEN_KEY = "taskflow_token";
 const USER_KEY = "taskflow_user";
 
@@ -75,7 +77,7 @@ formLogin.addEventListener("submit", async (event) => {
   const identifier = formLogin.identifier.value.trim();
   const password = formLogin.password.value;
 
-  const res = await fetch(`${API_BASE}/api/auth/login`, {
+  const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ identifier, password }),
@@ -101,7 +103,7 @@ formRegister.addEventListener("submit", async (event) => {
   const email = formRegister.email.value.trim();
   const password = formRegister.password.value;
 
-  const registerRes = await fetch(`${API_BASE}/api/auth/register`, {
+  const registerRes = await fetch(`${API_BASE_URL}/api/auth/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, email, password }),
@@ -112,7 +114,7 @@ formRegister.addEventListener("submit", async (event) => {
     return;
   }
 
-  const loginRes = await fetch(`${API_BASE}/api/auth/login`, {
+  const loginRes = await fetch(`${API_BASE_URL}/api/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),

@@ -1,4 +1,6 @@
-const API_BASE = require("./congif.API_BASE");
+const railwayDomain = (process.env.RAILWAY_PUBLIC_DOMAIN || "").replace(/^\/+/, "");
+const API_BASE = localStorage.getItem("taskflow_api_base") || ("https://"+railwayDomain);
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const TOKEN_KEY = "taskflow_token";
 const USER_KEY = "taskflow_user";
 
@@ -296,7 +298,7 @@ const hydrateFilters = (tasks) => {
 };
 
 const fetchWithToken = async (path, token, options = {}) =>
-  fetch(`${API_BASE}${path}`, {
+  fetch(`${API_BASE_URL}${path}`, {
     ...options,
     headers: {
       Authorization: `Bearer ${token}`,

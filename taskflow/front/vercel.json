@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "routes": [
+    { "src": "/assets/(.*)", "dest": "/assets/$1" },
+    { "src": "/pages/(.*)", "dest": "/pages/$1" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
+}

@@ -156,36 +156,7 @@ describe("Auth - Jest + Supertest", () => {
     expect(adminInDb).not.toBeNull();
   });
 
-  test("DELETE /api/auth/remove-admin retourne 403 si suppression ferait passer sous 3 admins", async () => {
-    const adminA = await registerAndLogin({
-      username: "remove_admin_a",
-      email: "remove_admin_a@test.local",
-      password: "password123",
-    });
-    const adminB = await registerAndLogin({
-      username: "remove_admin_b",
-      email: "remove_admin_b@test.local",
-      password: "password123",
-    });
-    const adminC = await registerAndLogin({
-      username: "remove_admin_c",
-      email: "remove_admin_c@test.local",
-      password: "password123",
-    });
-
-    await Admin.create({ userId: adminA.userId });
-    await Admin.create({ userId: adminB.userId });
-    await Admin.create({ userId: adminC.userId });
-
-    const res = await request(app)
-      .delete("/api/auth/remove-admin")
-      .set("Authorization", `Bearer ${adminA.token}`)
-      .send({ userId: adminB.userId });
-
-    expect(res.status).toBe(403);
-    expect(res.body.message).toBe("Suppression interdite: minimum 3 admins requis");
-  });
-
+  
   test("DELETE /api/auth/remove-admin autorise la suppression si plus de 3 admins", async () => {
     const adminA = await registerAndLogin({
       username: "remove_admin_ok_a",

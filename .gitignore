@@ -43,3 +43,5 @@ __screenshots__/
 Thumbs.db
 /taskflow/node_modules/.bin
 /taskflow/node_modules
+
+/taskflow/.env

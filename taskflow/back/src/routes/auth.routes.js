@@ -53,7 +53,7 @@ const router = express.Router();
  *       500:
  *         description: Erreur serveur
  */
-router.post("/api/auth/register", validateRegisterAuth, register);
+router.post("/register", validateRegisterAuth, register);
 
 /**
  * @swagger
@@ -84,7 +84,7 @@ router.post("/api/auth/register", validateRegisterAuth, register);
  *       500:
  *         description: Erreur serveur
  */
-router.post("/api/auth/login", validateLoginAuth, login);
+router.post("/login", validateLoginAuth, login);
 
 /**
  * @swagger
@@ -124,7 +124,7 @@ router.post("/api/auth/login", validateLoginAuth, login);
  *         description: Erreur serveur
  */
 router.post(
-  "/api/auth/register-admin",
+  "/register-admin",
   requireAuth,
   requireAdmin,
   validateRegisterAdminAuth,
@@ -163,7 +163,7 @@ router.post(
  *         description: Erreur serveur
  */
 router.delete(
-  "/api/auth/remove-admin",
+  "/remove-admin",
   requireAuth,
   requireAdmin,
   validateRemoveAdminAuth,
@@ -189,6 +189,6 @@ router.delete(
  *       500:
  *         description: Erreur serveur
  */
-router.get("/api/auth/users", requireAuth, requireAdmin, listUsers);
+router.get("/users", requireAuth, requireAdmin, listUsers);
 
 module.exports = router;

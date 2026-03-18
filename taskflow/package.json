@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon server.js",
     "start": "node server.js",
-    "start-front": "serve -s front -l $PORT",
+    "start-front": "serve front",
+    "start-front-local": "serve front",
     "test": "jest --runInBand",
     "seed": "node back/scripts/seed.js"
   },
